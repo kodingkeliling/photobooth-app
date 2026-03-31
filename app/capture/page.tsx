@@ -16,11 +16,11 @@ export default function CapturePage() {
 
   // New: Cycle countdown settings
   const [selectedCountdown, setSelectedCountdown] = useState<number>(3);
-  // Retake counts for each of the 4 photos
-  const [retakeCounts, setRetakeCounts] = useState<number[]>([0, 0, 0, 0]);
+  // Retake counts for cada photo
+  const [retakeCounts, setRetakeCounts] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]);
   const [retakeIndex, setRetakeIndex] = useState<number | null>(null);
-
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
+  const photoCount = selectedTemplate?.photoCount || 4;
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -67,7 +67,7 @@ export default function CapturePage() {
   const previewAspectRatio = '1 / 0.9';
 
   const takePhotoEffect = () => {
-    if (photos.length >= 4 || countdown !== null) return;
+    if (photos.length >= photoCount || countdown !== null) return;
     setRetakeIndex(null);
     setCountdown(selectedCountdown);
   };
@@ -148,7 +148,7 @@ export default function CapturePage() {
       focusIndex = photos.length - 1;
     }
 
-    if (focusIndex >= 0 && focusIndex < 4) {
+    if (focusIndex >= 0 && focusIndex < photoCount) {
       const targetSlot = scrollContainerRef.current?.children[focusIndex] as HTMLElement;
       if (targetSlot) {
         targetSlot.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -157,13 +157,13 @@ export default function CapturePage() {
   }, [photos.length, retakeIndex, countdown]);
 
   useEffect(() => {
-    if (photos.length === 4 && retakeIndex === null) {
+    if (photos.length === photoCount && retakeIndex === null) {
       console.log("All photos captured. Ready for finish.");
     }
   }, [photos, retakeIndex]);
 
   const handleFinish = () => {
-    if (photos.length === 4) {
+    if (photos.length === photoCount) {
       localStorage.setItem('capturedPhotos', JSON.stringify(photos));
       if (stream) stream.getTracks().forEach(track => track.stop());
       router.push('/results');
@@ -227,11 +227,11 @@ export default function CapturePage() {
           <div className="absolute bottom-8 left-0 w-full flex items-center justify-center px-10 gap-6 md:gap-10">
             <button
               onClick={takePhotoEffect}
-              disabled={countdown !== null || photos.length >= 4}
-              className={`w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center shadow-2xl transition-all scale-100 hover:scale-105 active:scale-95 disabled:grayscale disabled:opacity-50 ${photos.length >= 4 ? 'bg-green-600' : 'bg-blue-600'}`}
+              disabled={countdown !== null || photos.length >= photoCount}
+              className={`w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center shadow-2xl transition-all scale-100 hover:scale-105 active:scale-95 disabled:grayscale disabled:opacity-50 ${photos.length >= photoCount ? 'bg-green-600' : 'bg-blue-600'}`}
             >
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-4 border-white/30 flex items-center justify-center">
-                {photos.length >= 4 ? <CheckCircle2 size={32} className="text-white" /> : <Camera size={32} className="text-white" />}
+                {photos.length >= photoCount ? <CheckCircle2 size={32} className="text-white" /> : <Camera size={32} className="text-white" />}
               </div>
             </button>
 
@@ -251,7 +251,7 @@ export default function CapturePage() {
       <aside className="lg:col-span-3 bg-surface p-6 md:px-8 flex flex-col items-start border-l border-surface-variant/30 h-full max-h-screen">
         <header className="mb-6 text-left w-full shrink-0">
           <h2 className="text-xl md:text-2xl editorial-text font-bold mb-1">My Photos</h2>
-          <p className="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">{photos.length}/4 CAPTURED</p>
+          <p className="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">{photos.length}/{photoCount} CAPTURED</p>
         </header>
 
         {/* Dynamic height photo list - SPACED OUT FOR BETTER VISUALS */}
@@ -259,7 +259,7 @@ export default function CapturePage() {
           ref={scrollContainerRef}
           className="flex-1 flex flex-col gap-8 w-full max-w-[320px] overflow-y-auto overflow-x-hidden no-scrollbar px-4 pt-12 pb-20 scroll-smooth"
         >
-          {Array.from({ length: 4 }).map((_, i) => {
+          {Array.from({ length: photoCount }).map((_, i) => {
             const isCapturing = retakeIndex === i || (photos.length === i && countdown !== null);
 
             return (
@@ -312,7 +312,7 @@ export default function CapturePage() {
         </div>
 
         <div className="pt-8 mt-auto shrink-0 w-full flex flex-col gap-4">
-          {photos.length < 4 ? (
+          {photos.length < photoCount ? (
             <button
               disabled={photos.length > 0 || countdown !== null}
               onClick={() => {

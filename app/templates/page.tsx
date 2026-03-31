@@ -29,6 +29,68 @@ export const TEMPLATES = [
       { x: 57, y: 47.8, w: 36, h: 18, pattern: 2 },
       { x: 57, y: 69, w: 36, h: 18, pattern: 1 },
     ]
+  },
+  {
+    id: 2,
+    name: 'Happy Birthday',
+    category: 'Birthday',
+    frameUrl: '/templates/happy-birthday.png',
+    bg: '#FFFFFF',
+    photoCount: 3,
+    orientation: 'portrait',
+    slots: [
+      // LEFT STRIP (1, 2, 3, 4)
+      { x: 5, y: 17.5, w: 36, h: 18, pattern: 1 },
+      { x: 5, y: 40.5, w: 36, h: 18, pattern: 2 },
+      { x: 5, y: 64.5, w: 36, h: 18, pattern: 3 },
+
+      // RIGHT STRIP (4, 3, 2, 1)
+      { x: 57, y: 17.5, w: 36, h: 18, pattern: 3 },
+      { x: 57, y: 40.5, w: 36, h: 18, pattern: 2 },
+      { x: 57, y: 64.5, w: 36, h: 18, pattern: 1 },
+    ]
+  },
+  {
+    id: 3,
+    name: 'Dino Cute',
+    category: 'Birthday',
+    frameUrl: '/templates/dino-cute.png',
+    bg: '#FFFFFF',
+    photoCount: 3,
+    orientation: 'portrait',
+    slots: [
+      // LEFT STRIP (1, 2, 3, 4)
+      { x: 9, y: 4.5, w: 40, h: 22, pattern: 1 },
+      { x: 9, y: 30.5, w: 40, h: 22, pattern: 2 },
+      { x: 9, y: 55.5, w: 40, h: 22, pattern: 3 },
+
+      // RIGHT STRIP (4, 3, 2, 1)
+      { x: 51, y: 4.5, w: 40, h: 22, pattern: 3 },
+      { x: 51, y: 30.5, w: 40, h: 22, pattern: 2 },
+      { x: 51, y: 55.5, w: 40, h: 22, pattern: 1 },
+    ]
+  },
+  {
+    id: 4,
+    name: 'Happy Graduation',
+    category: 'Party',
+    frameUrl: '/templates/happy-graduation.png',
+    bg: '#FFFFFF',
+    photoCount: 4,
+    orientation: 'portrait',
+    slots: [
+      // LEFT STRIP (1, 2, 3, 4)
+      { x: 4, y: 8, w: 42, h: 16, pattern: 1 },
+      { x: 4, y: 25.9, w: 42, h: 16, pattern: 2 },
+      { x: 4, y: 43.8, w: 42, h: 16, pattern: 3 },
+      { x: 4, y: 61.7, w: 42, h: 16, pattern: 4 },
+
+      // RIGHT STRIP (4, 3, 2, 1)
+      { x: 54, y: 8, w: 42, h: 16, pattern: 4 },
+      { x: 54, y: 25.9, w: 42, h: 16, pattern: 3 },
+      { x: 54, y: 43.8, w: 42, h: 16, pattern: 2 },
+      { x: 54, y: 61.7, w: 42, h: 16, pattern: 1 },
+    ]
   }
 ];
 

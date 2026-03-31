@@ -13,23 +13,21 @@ export const SessionTimer: React.FC<SessionTimerProps> = ({
 }) => {
   const router = useRouter();
   
-  const [timeLeft, setTimeLeft] = useState<number | null>(() => {
-    if (typeof window !== 'undefined') {
-      const deadline = localStorage.getItem('sessionDeadline');
-      if (deadline) {
-        return Math.max(0, Math.floor((parseInt(deadline) - Date.now()) / 1000));
-      }
-    }
-    return null;
-  });
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     let deadline = localStorage.getItem('sessionDeadline');
     if (!deadline) {
       const newDeadline = Date.now() + (5 * 60 * 1000);
       localStorage.setItem('sessionDeadline', newDeadline.toString());
       deadline = newDeadline.toString();
     }
+
+    // Set initial time right away
+    const remaining = Math.max(0, parseInt(deadline) - Date.now());
+    setTimeLeft(Math.floor(remaining / 1000));
 
     const interval = setInterval(() => {
       const remaining = Math.max(0, parseInt(deadline!) - Date.now());
@@ -54,6 +52,10 @@ export const SessionTimer: React.FC<SessionTimerProps> = ({
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
+
+  if (!mounted) {
+    return null; // Or a static version that matches server-side "5:00"
+  }
 
   return (
     <div className="fixed top-4 right-6 z-[100] flex items-center gap-2.5 bg-white/80 backdrop-blur-3xl px-3.5 py-1.5 rounded-xl border border-blue-100/50 shadow-[0_10px_30px_rgba(37,99,235,0.08)] transition-all">

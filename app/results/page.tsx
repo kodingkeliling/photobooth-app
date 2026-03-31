@@ -126,10 +126,12 @@ function ResultsContent() {
 
     // SIMULATED GIF ANIMATION - 1 SECOND INTERVAL
     const interval = setInterval(() => {
-      setGifIndex(prev => (prev + 1) % 4);
+      if (photos.length > 0) {
+        setGifIndex(prev => (prev + 1) % photos.length);
+      }
     }, 1000);
     return () => clearInterval(interval);
-  }, [publicId]);
+  }, [publicId, photos.length]);
 
   const handleRestart = () => {
     localStorage.removeItem('capturedPhotos');
