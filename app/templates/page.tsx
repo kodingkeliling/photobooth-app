@@ -70,21 +70,21 @@ export default function TemplateSelectionPage() {
           <p className="text-[10px] text-slate-400 font-bold tracking-[0.6em] uppercase italic">Curated Canvas Selection</p>
         </header>
 
-        <div className="flex flex-wrap justify-center gap-16 pb-48">
+        <div className="flex flex-wrap justify-start gap-10 pb-48">
           {filteredTemplates.map((template) => (
             <motion.div
               key={template.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               onClick={() => setSelectedId(template.id)}
-              className="relative cursor-pointer group flex flex-col items-center"
+              className="relative cursor-pointer group flex flex-col items-start"
             >
               {/* PREVIEW CONTAINER */}
               <div className={`relative transition-all duration-500 ${selectedId === template.id ? 'scale-105' : 'group-hover:scale-102 opacity-60'
                 }`}>
 
                 <div
-                  className="relative shadow-2xl overflow-hidden border-4 border-white bg-white rounded-md w-[280px] md:w-[350px] aspect-[1/1.52]"
+                  className="relative shadow-xl overflow-hidden border-2 border-white bg-white rounded-md w-[200px] md:w-[240px] aspect-[1/1.52]"
                   style={{ backgroundColor: template.bg }}
                 >
                   {/* ABSOLUTE COORDINATE SLOTS (BEHIND) */}
@@ -92,7 +92,7 @@ export default function TemplateSelectionPage() {
                     {template.slots.map((slot, i) => (
                       <div
                         key={i}
-                        className="absolute bg-slate-50/50 border border-black/[0.03] flex items-center justify-center font-black text-xs text-slate-300"
+                        className="absolute bg-slate-50/50 border border-black/[0.03] flex items-center justify-center font-black text-[8px] text-slate-300"
                         style={{
                           left: `${slot.x}%`,
                           top: `${slot.y}%`,
@@ -118,20 +118,19 @@ export default function TemplateSelectionPage() {
                   <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                     <motion.div
                       initial={{ scale: 0 }} animate={{ scale: 1 }}
-                      className="w-16 h-16 rounded-2xl bg-white text-primary flex items-center justify-center shadow-3xl border-4 border-primary/20"
+                      className="w-12 h-12 rounded-2xl bg-white text-primary flex items-center justify-center shadow-2xl border-4 border-primary/20"
                     >
-                      <Check size={32} strokeWidth={4} />
+                      <Check size={24} strokeWidth={4} />
                     </motion.div>
                   </div>
                 )}
               </div>
 
-              <div className={`mt-10 text-center transition-all ${selectedId === template.id ? 'opacity-100' : 'opacity-40'}`}>
-                <h3 className="text-base font-black uppercase tracking-[0.4em] mb-2">{template.name}</h3>
-                <div className="flex items-center justify-center gap-4">
-                  <div className="w-8 h-px bg-slate-200"></div>
-                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest italic font-serif">Studio Asset Edition</span>
-                  <div className="w-8 h-px bg-slate-200"></div>
+              <div className={`mt-6 text-left w-full transition-all ${selectedId === template.id ? 'opacity-100' : 'opacity-40'}`}>
+                <h3 className="text-[10px] font-black uppercase tracking-[0.4em] mb-1">{template.name}</h3>
+                <div className="flex items-center justify-start gap-4">
+                  <div className="w-4 h-0.5 bg-slate-200"></div>
+                  <span className="text-[6px] font-bold text-slate-400 uppercase tracking-widest italic font-serif">Asset Edition</span>
                 </div>
               </div>
             </motion.div>
