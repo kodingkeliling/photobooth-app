@@ -94,7 +94,11 @@ const FinalFrameResult = memo(({ template, photos }: { template: any, photos: st
 
 FinalFrameResult.displayName = "FinalFrameResult";
 
-export default function ResultsPage() {
+import { Suspense } from 'react';
+
+// ... (other components)
+
+function ResultsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const publicId = searchParams.get('id');
@@ -229,4 +233,16 @@ export default function ResultsPage() {
       </footer>
     </div>
   );
+}
+
+export default function ResultsPage() {
+    return (
+        <Suspense fallback={
+            <div className="bg-[#EBEEF2] h-screen w-full flex items-center justify-center text-blue-600">
+                <RefreshCw className="animate-spin opacity-20" size={48} />
+            </div>
+        }>
+            <ResultsContent />
+        </Suspense>
+    );
 }
